@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>FORTUNE LAB サイト設計</title>
+  <meta name="description" content="悩みを吐き出して、12の星座で自分を知り、小さく動き出すための場所。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+  <script type="module" src="/src/main.ts"></script>
+</head>
+<body>
+
+<div class="switch">
+  <div class="wrap">
+    <span class="mono label">FORTUNE LAB / 設計プロトタイプ v2</span>
+    <nav aria-label="表示切替">
+      <a href="#site">サイト（トップ）</a>
+      <a href="#pillar">星座ページ一覧</a>
+      <a href="#self">知る</a>
+      <a href="#growth">変わる</a>
+      <a href="#article">記事</a>
+      <a href="#blueprint">設計書</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ================= SITE ================= -->
+<section class="view" id="v-site">
+  <div class="pr-bar"><div class="wrap">本サイトはアフィリエイト広告を利用しています。占いは自己理解のきっかけとしてお楽しみください。</div></div>
+  <header class="site-head">
+    <div class="wrap">
+      <a class="logo" href="#site">FORTUNE LAB<small>DISCOVER YOURSELF. SHAPE YOUR FUTURE.</small></a>
+      <nav class="gnav" aria-label="サイトメニュー">
+        <a href="#site"><b>吐き出す</b><span>RELEASE</span></a>
+        <a href="#pillar"><b>12の星座</b><span>12 STARS</span></a>
+        <a href="#self"><b>知る</b><span>SELF</span></a>
+        <a href="#growth"><b>変わる</b><span>GROWTH</span></a>
+        <a class="cta-nav" href="#site">話して整理する</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="mono eyebrow">LAB NOTE No.001</p>
+        <h1>悩みは、<br>あって当然。</h1>
+        <p class="lead">人間関係のもやもやも、うまくいかない日も、ちゃんと生きているから生まれるもの。FORTUNE LABは、悩みを吐き出して、12の星座で自分を知り、小さく動き出すための場所です。</p>
+        <div class="promise">
+          <div><span class="mono">01</span><span><b>悩みを否定しない。</b>「気にしすぎ」「前向きに」とは言いません。</span></div>
+          <div><span class="mono">02</span><span><b>答えを急がない。</b>まず吐き出して、言葉にするところから。</span></div>
+          <div><span class="mono">03</span><span><b>小さく動ける形にする。</b>5分でできる「今日の実験」で終わります。</span></div>
+        </div>
+      </div>
+
+      <div class="note-pad" id="pad">
+        <p class="mono">吐き出しノート</p>
+        <h2>今、心にひっかかっていることは？</h2>
+        <p class="sub">うまく書かなくて大丈夫。誰にも見られません。</p>
+        <p class="cats-label">近いキーワード（いくつでも・選ばなくても大丈夫）</p>
+        <div class="cats" role="group" aria-label="悩みのキーワード" id="cats"></div>
+        <label for="vent" class="sr-only">悩みを書く</label>
+        <textarea id="vent">同僚の一言がずっと頭から離れない。気にしすぎだと分かっているけど、明日また顔を合わせるのが少し憂うつ。</textarea>
+        <div class="pad-foot"><span id="count" aria-live="polite">0文字</span><label class="keep"><input type="checkbox" id="vent-keep" checked> 種として記録する</label><button class="btn" id="vent-go" type="button">吐き出す</button></div>
+        <div class="reply" id="reply" aria-live="polite" hidden>
+          <div class="rp-alert" id="rp-alert" hidden><b>いま、とてもつらい状態かもしれません。</b>ひとりで抱えずに、話を聞いてくれる窓口を頼ってください。<a href="https://www.mhlw.go.jp/mamorouyokokoro/" target="_blank" rel="noopener">厚生労働省「まもろうよ こころ」</a>で、電話やSNSで相談できる窓口を探せます。</div>
+          <h3 id="rp-title"></h3>
+          <p id="rp-accept"></p>
+          <div class="row"><span class="mono">星座の声</span><span id="rp-f"></span></div>
+          <div class="row"><span class="mono">あなたのクセ</span><span id="rp-s"></span></div>
+          <div class="row"><span class="mono">今日の実験</span><span id="rp-e"></span></div>
+          <div class="rp-articles"><p class="mono">いまのあなたに近い記事</p><div id="rp-articles"></div></div>
+          <p class="rp-seed" id="rp-seed"></p>
+          <div class="acts"><button class="btn" id="release" type="button">夜空に流す</button><a id="rp-pillar" href="#pillar"></a></div>
+        </div>
+        <p class="safety">文章は送信も保存もされません。記録されるのは星座とキーワード、表示した記事だけで、この端末の中にだけ残ります。つらさが強いときは、ひとりで抱えずに<a href="#soudan">相談窓口</a>も頼ってください。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec"><div class="wrap">
+    <div class="sec-head"><div><h2>今夜の星座カード</h2><p>12の星座から3枚を並べました。直感で1枚めくってください。</p></div><button class="linkbtn" id="redraw" type="button">別の3枚を並べる</button></div>
+    <div class="draw-grid">
+      <div class="cards" id="cards" role="group" aria-label="カードを1枚選ぶ"></div>
+      <div class="draw-out" id="draw-out" aria-live="polite">
+        <p class="mono eyebrow">3択 × 自己分析 × 今日の実験</p>
+        <h3 id="d-title">カードを1枚選んでください</h3>
+        <div id="d-body" hidden>
+          <div class="row"><span class="mono">占い</span><span id="d-f"></span></div>
+          <div class="row"><span class="mono">思考のクセ</span><span id="d-s"></span></div>
+          <div class="row"><span class="mono">今日の実験</span><span class="exp" id="d-e"></span></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="sec"><div class="wrap">
+    <div class="sec-head"><div><h2>FORTUNE LABの12の星座</h2><p>人が生きていくうえで大切な12の観点を、自然のモチーフに置き換えた独自の星座です。生まれ月で「生まれ星座」が決まり、悩みに合わせて「今夜の星座」を選べます。</p></div></div>
+    <div class="stars-wrap">
+      <div>
+        <div class="birth"><label for="bm">生まれ月</label><select id="bm"></select><output id="bm-out" for="bm"></output></div>
+        <div class="stars" id="stars"></div>
+      </div>
+      <div class="detail" id="detail" aria-live="polite"></div>
+    </div>
+  </div></div>
+
+  <div class="sec"><div class="wrap">
+    <div class="sec-head"><h2>新着LAB NOTE</h2><a href="#site">すべて見る</a></div>
+    <div class="posts" id="posts"></div>
+  </div></div>
+
+  <div class="sec"><div class="wrap split">
+    <div class="box">
+      <p class="mono eyebrow">FREE SHINDAN</p>
+      <h3>12問でわかる「今夜の星座」診断</h3>
+      <p>いま一番ゆれている観点を12の星座から判定。結果ページで、その星座の悩みとの付き合い方と今日の実験を紹介します。</p>
+      <a class="btn" href="#self">無料で診断する</a>
+    </div>
+    <div class="box">
+      <p class="mono eyebrow">PR｜比較</p>
+      <h3>誰かに聞いてほしい夜に。電話占いの選び方</h3>
+      <table class="rank">
+        <thead><tr><th>サービス</th><th>向いている人</th><th>初回</th></tr></thead>
+        <tbody>
+          <tr><td>サービスA</td><td>人間関係をじっくり話したい</td><td>特典あり</td></tr>
+          <tr><td>サービスB</td><td>恋愛・家族の相談</td><td>特典あり</td></tr>
+          <tr><td>サービスC</td><td>文字で気軽に吐き出したい</td><td>無料枠</td></tr>
+        </tbody>
+      </table>
+      <a class="btn brass" href="#site">比較ページを見る</a>
+    </div>
+  </div></div>
+
+</section>
+
+<!-- ================= SELF: 知る ================= -->
+<section class="view" id="v-self" hidden>
+  <div class="p-hero">
+    <div class="wrap">
+      <div>
+        <p class="crumb"><a href="#site">ホーム</a> ＞ 知る</p>
+        <p class="mono p-eyebrow">SELF</p>
+        <h1>知る｜自分のパターンに気づく</h1>
+        <p class="sub">悩みが生まれる観点は、人によって違います。診断・思考のクセ・これまでの種から、あなたがいま大切にしている観点を見つけます。</p>
+      </div>
+      <svg class="ico big" viewBox="0 0 40 40" data-ico="tsuki" aria-hidden="true"></svg>
+    </div>
+  </div>
+  <div class="wrap pg">
+    <nav class="pg-toc" aria-label="このページの内容"><a href="#self" data-jump="self-quiz-sec">今夜の星座診断</a><a href="#self" data-jump="self-habits-sec">思考のクセ</a><a href="#self" data-jump="self-map-sec">あなたの星図</a><a href="#self" data-jump="self-articles-sec">知る記事</a></nav>
+    <section class="pg-sec" id="self-quiz-sec">
+      <h2><span class="mono">01</span>今夜の星座診断<small>12問・約2分</small></h2>
+      <p class="muted">直感で答えてください。いちばん揺れている観点が「今夜の星座」です。回答は保存されません。</p>
+      <div id="self-quiz"></div>
+    </section>
+    <section class="pg-sec" id="self-habits-sec">
+      <h2><span class="mono">02</span>12の思考のクセ</h2>
+      <p class="muted">どれも欠点ではなく、大切にしているものの裏返しです。気になるクセから、その星座のページへ進めます。</p>
+      <div id="self-habits"></div>
+    </section>
+    <section class="pg-sec" id="self-map-sec">
+      <h2><span class="mono">03</span>あなたの星図</h2>
+      <p class="muted">吐き出しノートで残した種から、どの観点で悩みやすいかを表しています。記録はこの端末の中だけにあります。</p>
+      <div id="self-map"></div>
+    </section>
+    <section class="pg-sec" id="self-articles-sec">
+      <h2><span class="mono">04</span>知る記事</h2>
+      <div id="self-articles"></div>
+    </section>
+  </div>
+</section>
+
+<!-- ================= GROWTH: 変わる ================= -->
+<section class="view" id="v-growth" hidden>
+  <div class="p-hero">
+    <div class="wrap">
+      <div>
+        <p class="crumb"><a href="#site">ホーム</a> ＞ 変わる</p>
+        <p class="mono p-eyebrow">GROWTH</p>
+        <h1>変わる｜5分で、小さく動く</h1>
+        <p class="sub">気づいたことを、今日できる小さな行動に。成功条件は「やってみたこと」だけ。できなかった日は数えません。</p>
+      </div>
+      <svg class="ico big" viewBox="0 0 40 40" data-ico="kawa" aria-hidden="true"></svg>
+    </div>
+  </div>
+  <div class="wrap pg">
+    <nav class="pg-toc" aria-label="このページの内容"><a href="#growth" data-jump="growth-record-sec">実験の記録</a><a href="#growth" data-jump="growth-library-sec">実験ライブラリ</a><a href="#growth" data-jump="growth-week-sec">1週間の実験</a><a href="#growth" data-jump="growth-articles-sec">変わる記事</a></nav>
+    <section class="pg-sec" id="growth-record-sec">
+      <h2><span class="mono">01</span>実験の記録</h2>
+      <div id="growth-record"></div>
+    </section>
+    <section class="pg-sec" id="growth-library-sec">
+      <h2><span class="mono">02</span>今日の実験ライブラリ</h2>
+      <p class="muted">どれも5分以内・道具不要。気になったものを1つだけ選んでください。</p>
+      <div id="growth-library"></div>
+    </section>
+    <section class="pg-sec" id="growth-week-sec">
+      <h2><span class="mono">03</span>1週間の実験</h2>
+      <div id="growth-week"></div>
+    </section>
+    <section class="pg-sec" id="growth-articles-sec">
+      <h2><span class="mono">04</span>変わる記事</h2>
+      <div id="growth-articles"></div>
+    </section>
+    <section class="pg-sec">
+      <div id="growth-talk"></div>
+    </section>
+  </div>
+</section>
+
+<!-- ================= SEEDS: 種の記録 ================= -->
+<section class="view" id="v-seeds" hidden>
+  <div class="p-hero">
+    <div class="wrap">
+      <div>
+        <p class="crumb"><a href="#site">ホーム</a> ＞ <a href="#self">知る</a> ＞ 種の記録</p>
+        <h1>種の記録</h1>
+        <p class="sub">吐き出した悩みの「星座」と「キーワード」、そのとき表示した記事だけを残しています。文章は残りません。記録はこの端末の中にだけ保存され、どこにも送信されません。</p>
+      </div>
+      <svg class="ico big" viewBox="0 0 40 40" data-ico="hana" aria-hidden="true"></svg>
+    </div>
+  </div>
+  <div class="wrap" id="seeds-root"></div>
+</section>
+
+<!-- ================= PILLAR INDEX: 星座ページ一覧 ================= -->
+<section class="view" id="v-pillar">
+  <div class="p-hero">
+    <div class="wrap">
+      <div>
+        <p class="crumb"><a href="#site">ホーム</a> ＞ 12の星座</p>
+        <h1>12の星座ページ一覧</h1>
+        <p class="sub">人が生きていくうえで大切な12の観点を、自然のモチーフに置き換えたFORTUNE LAB独自の星座です。生まれ月の星座でも、いま悩んでいることに近い星座でも、どこからでも読めます。</p>
+        <div class="birth birth-dark"><label for="idx-bm">生まれ月から探す</label><select id="idx-bm"><option value="">選んでください</option></select><output id="idx-bm-out" for="idx-bm"></output></div>
+      </div>
+      <svg class="ico big" viewBox="0 0 40 40" data-ico="hoshi" aria-hidden="true"></svg>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="notes-bar"><label class="toggle-notes"><input type="checkbox" id="inotes" checked> 設計メモを表示</label></div>
+    <div class="note"><b>INDEX</b>/stars/ の一覧ページ。12のピラーページへの入口で、内部リンクのハブになる。季節ごとにまとめ、生まれ月の星座を強調表示。詳細版が公開済みのページにはバッジを付ける。</div>
+    <div id="star-index"></div>
+  </div>
+</section>
+
+<!-- ================= PILLAR TEMPLATE: 各星座ページ ================= -->
+<section class="view" id="v-star" hidden>
+  <div class="pr-bar"><div class="wrap">本記事にはアフィリエイト広告（PR）が含まれます。</div></div>
+  <div id="star-page"></div>
+</section>
+
+<!-- ================= ARTICLE: 一覧（#article）・各記事（#article/<id>） ================= -->
+<section class="view" id="v-article" hidden>
+  <div class="pr-bar"><div class="wrap">本記事にはアフィリエイト広告（PR）が含まれます。</div></div>
+  <div class="wrap" id="article-root"></div>
+</section>
+
+<!-- ================= BLUEPRINT ================= -->
+<section class="view" id="v-blueprint" hidden>
+  <div class="wrap">
+    <div class="bp-hero">
+      <p class="mono eyebrow">SITE BLUEPRINT v2.0 ／ 2026.11</p>
+      <h1>FORTUNE LAB サイト設計書</h1>
+      <p>悩みを吐き出せる場所を入口に、独自の12の星座で自己理解を深め、今日の実験で行動につなげる。占いアフィリエイトで収益を立ち上げ、自社の診断・商品へ広げる設計です。</p>
+      <div class="bp-toc">
+        <a href="#blueprint" data-jump="b0">0. スタンス</a><a href="#blueprint" data-jump="b1">1. 12の星座</a><a href="#blueprint" data-jump="b2">2. 吐き出し機能</a><a href="#blueprint" data-jump="b3">3. 導線</a><a href="#blueprint" data-jump="b4">4. サイトマップ</a><a href="#blueprint" data-jump="b5">5. 記事タイプ</a><a href="#blueprint" data-jump="b6">6. 記事テンプレ</a><a href="#blueprint" data-jump="b7">7. 言葉のルール</a><a href="#blueprint" data-jump="b8">8. 最初の30記事</a><a href="#blueprint" data-jump="b9">9. 収益とKPI</a><a href="#blueprint" data-jump="b10">10. 安全・法務</a>
+      </div>
+    </div>
+
+    <div class="bp-sec" id="b0">
+      <h2><span class="mono">00</span>ブランドスタンス</h2>
+      <p class="stance">悩みは、あって当然。<br>悩むのは、ちゃんと生きている証拠。</p>
+      <div class="grid3">
+        <div class="panel key"><h3>否定しない</h3><p>悩みを「直すべきもの」として扱わない。どの記事も、悩みを肯定する一文から始める。</p></div>
+        <div class="panel key"><h3>急がせない</h3><p>解決策より先に、吐き出して言葉にする場を用意する。答えを出さずに終わってもいい。</p></div>
+        <div class="panel key"><h3>小さく動く</h3><p>最後は必ず5分以内の「今日の実験」。成功条件はやってみたこと自体。</p></div>
+      </div>
+    </div>
+
+    <div class="bp-sec" id="b1">
+      <h2><span class="mono">01</span>12の星座（独自の選定法）</h2>
+      <p>既存の12星座は使わず、FORTUNE LAB独自の12星座を定義します。観点を先に決め、それを自然のモチーフに変え、日本の季節の巡りで12か月に割り当てます。</p>
+      <div class="method">
+        <div class="mstep"><span class="mono">STEP 1</span><h3>観点を12に絞る</h3><p>人が生きるうえで悩みが生まれる領域を洗い出し、重なりのない12観点に整理。</p></div>
+        <div class="mstep"><span class="mono">STEP 2</span><h3>自然のモチーフへ</h3><p>観点の性質に合う自然物を当てる。月＝満ち欠けする本音、森＝ほどよい距離で並ぶ木。</p></div>
+        <div class="mstep"><span class="mono">STEP 3</span><h3>季節に割り当て</h3><p>モチーフが最も映える月を「生まれ月」に。6月＝雨、9月＝中秋の月、10月＝実り。</p></div>
+        <div class="mstep"><span class="mono">STEP 4</span><h3>言葉を定義</h3><p>各星座にキーワード3つ、あって当然の悩み、星座の声、思考のクセ、今日の実験を固定。</p></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>生まれ月</th><th>星座</th><th>観点</th><th>モチーフの意味</th><th>キーワード</th><th>あって当然の悩み</th><th>今日の実験</th></tr></thead>
+        <tbody id="bp-stars"></tbody>
+      </table></div>
+      <div class="grid2">
+        <div class="panel"><span class="mono">使い方 ①</span><h3>生まれ星座（固定）</h3><p>生まれ月で決まる、その人が大切にしやすい観点。強みとつまずきやすさの両方として読む。プロフィールやSNSで名乗れる「自分の星座」になる。</p></div>
+        <div class="panel"><span class="mono">使い方 ②</span><h3>今夜の星座（変わる）</h3><p>いま悩んでいる観点。吐き出しノートのジャンル選択、3択カード、12問診断で決まる。記事・CTAの出し分けに使う。</p></div>
+      </div>
+    </div>
+
+    <div class="bp-sec" id="b2">
+      <h2><span class="mono">02</span>吐き出し機能の設計</h2>
+      <p>サイトの最大の特徴。特に人間関係（森の星座）の悩みを安心して書ける場にします。段階的に公開範囲を広げます。</p>
+      <div class="phase">
+        <div class="panel"><span class="mono">PHASE 1｜ひとりで書く</span><h3>吐き出しノート</h3><ul><li>自由記述＋キーワード（複数可）→「吐き出す」</li><li>文章とキーワードをブラウザ内で照合し、今夜の星座と関連記事を3本まで表示</li><li>文章は照合に使うだけで送信も保存もしない</li><li>星座・キーワード・表示した記事を「種」として端末内に記録（任意）</li><li>「種の記録」で過去の種・既読・今日の実験を振り返る</li><li>「夜空に流す」で文章を消す儀式</li></ul></div>
+        <div class="panel"><span class="mono">PHASE 2｜わかり合う</span><h3>匿名の「わかる」ボード</h3><ul><li>任意で匿名投稿。星座別に表示</li><li>反応は「わかる」だけ。コメント欄なし</li><li>投稿は公開前に目視確認</li><li>人気の悩みを記事テーマに反映</li></ul></div>
+        <div class="panel"><span class="mono">PHASE 3｜話す</span><h3>話して整理する</h3><ul><li>書いても整理しきれない人へ電話・チャット占いを案内</li><li>LINE登録で週1回「今夜の星座」配信</li><li>月1回のオンライン吐き出し会（有料）</li></ul></div>
+      </div>
+      <div class="grid2">
+        <div class="panel ng"><h3>守ること</h3><ul><li>個人名・会社名・特定できる情報は投稿不可（自動で伏せ字＋目視）</li><li>希死念慮などの言葉を含む投稿は公開せず、相談窓口を表示</li><li>投稿者のIPやメールを記事・広告に使わない</li></ul></div>
+        <div class="panel"><h3>なぜ人間関係から始めるか</h3><p>職場・友人・家族の悩みは誰にでもあり、検索数も多い。吐き出したい気持ちが強く、「話して整理する」電話占いとの相性もよい。森・根・花の3星座を最初の重点に置く。</p></div>
+      </div>
+    </div>
+
+    <div class="bp-sec" id="b3">
+      <h2><span class="mono">03</span>ユーザー導線</h2>
+      <div class="funnel">
+        <div class="fstep"><span class="mono">入口</span><h3>吐き出す</h3><p>検索・SNSから記事へ。冒頭の吐き出し欄で書く。</p></div>
+        <div class="fstep"><span class="mono">受け止める</span><h3>肯定される</h3><p>悩みはあって当然という一文と、同じ悩みの「わかる」。</p></div>
+        <div class="fstep"><span class="mono">知る</span><h3>12の星座</h3><p>星座の声と思考のクセで、自分のパターンに気づく。</p></div>
+        <div class="fstep"><span class="mono">動く</span><h3>今日の実験</h3><p>5分の行動。診断・LINEで継続。</p></div>
+        <div class="fstep"><span class="mono">収益</span><h3>話す・学ぶ</h3><p>電話占い比較（ASP）、ワークブック、吐き出し会。</p></div>
+      </div>
+    </div>
+
+    <div class="bp-sec" id="b4">
+      <h2><span class="mono">04</span>サイトマップとURL設計</h2>
+<div class="tree"><span class="m">/</span>                         トップ（吐き出しノート・今夜の星座カード・12の星座）
+├── <span class="m">hakidashi/</span>            吐き出しノート単体ページ <span class="c">Phase 2で「わかる」ボード</span>
+├── <span class="m">stars/</span>                12の星座 <span class="c">占いの柱</span>
+│   ├── tsuki/ umi/ yama/ mori/ hana/ taiyo/
+│   ├── kawa/ mi/ kaze/ ame/ ne/ hoshi/      <span class="c">← 各星座のピラーページ</span>
+│   └── monthly/          12の星座の今月のメッセージ（毎月更新）
+├── <span class="m">self/</span>                 知る｜思考のクセ・強み・価値観
+├── <span class="m">growth/</span>               変わる｜習慣・休み方・断り方
+├── <span class="m">shindan/</span>              今夜の星座診断（12問）
+├── <span class="m">compare/</span>              PR｜電話占い・チャット占いの選び方 <span class="c">← ASP収益の受け皿</span>
+└── about/  policy/  ad-policy/  soudan/（相談窓口一覧）</div>
+      <p class="aside">記事は観点ごとに /stars/mori/ の下へ集め、星座ページから内部リンクで束ねます。ソースも同じ構成で、src/stars/&lt;星座&gt;/ に star.ts（基本データ）・pillar.ts（詳細版ページ・任意）・articles/（記事）を置きます。</p>
+    </div>
+
+    <div class="bp-sec" id="b5">
+      <h2><span class="mono">05</span>記事タイプ</h2>
+      <p>記事ファイルの <code>kind</code> で、どのメニューに載るかが決まります。星座ページには種別に関係なく、その星座フォルダの記事がすべて載ります。</p>
+      <div class="tbl"><table>
+        <thead><tr><th>タイプ</th><th>kind／メニュー</th><th>役割</th><th>KW例</th><th>送り先</th><th>初期30記事</th></tr></thead>
+        <tbody>
+          <tr><td><b>A 悩み×星座</b></td><td><code>worry</code>（省略時）</td><td>主力。吐き出し→星座の声→クセ→実験</td><td>人間関係 疲れた／親 わかってもらえない</td><td>比較記事・診断</td><td class="num">12</td></tr>
+          <tr><td><b>S 思考のクセ</b></td><td><code>self</code>／知る</td><td>自分の傾向に気づく。各星座1本の「〇の星座の思考のクセ」シリーズを柱にする</td><td>断れない 性格／なぜ自分を責めてしまう</td><td>星座ページ・診断</td><td class="num">—</td></tr>
+          <tr><td><b>E 実験ハウツー</b></td><td><code>growth</code>／変わる</td><td>今日の実験を深掘り。保存・シェアされる</td><td>やさしい断り方／休み方 コツ</td><td>診断・LINE</td><td class="num">2</td></tr>
+          <tr><td><b>B 星座ピラー</b></td><td>（pillar.ts）</td><td>12の星座の解説ページ。シリーズの顔</td><td>（指名検索）森の星座</td><td>A記事・診断</td><td class="num">12</td></tr>
+          <tr><td><b>C 比較・選び方</b></td><td><code>worry</code></td><td>収益。ASPリンクを集約</td><td>電話占い 人間関係 相談</td><td>ASP</td><td class="num">2</td></tr>
+          <tr><td><b>D 体験レビュー</b></td><td><code>worry</code></td><td>一次情報でCVRと信頼を上げる</td><td>電話占い 体験談 職場</td><td>ASP</td><td class="num">2</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 class="bp-sub">種別の判定基準｜読み終えたときに何が残るか</h3>
+      <div class="grid3">
+        <div class="panel"><span class="mono">worry｜悩み×星座</span><h3>「悩んでいいんだ」</h3><ul><li>この悩みはあって当然、と受け止められる</li><li>入口は悩みの場面</li><li>KW：〇〇 疲れた／つらい／しんどい</li></ul></div>
+        <div class="panel key"><span class="mono">self｜知る</span><h3>「だから私はこうなるのか」</h3><ul><li>自分の傾向に気づく</li><li>本文の中心は思考のクセ・強み・価値観の説明</li><li>KW：〇〇 性格／心理／なぜ〇〇してしまう</li></ul></div>
+        <div class="panel"><span class="mono">growth｜変わる</span><h3>「これをやってみよう」</h3><ul><li>明日やることが決まる</li><li>本文の中心は具体的な行動と手順</li><li>KW：〇〇 方法／やり方／コツ</li></ul></div>
+      </div>
+      <div class="grid2">
+        <div class="panel"><h3>知る記事の条件</h3><ul class="check"><li>本文の中心は思考のクセ・強み・価値観。解決の手順を中心にしない</li><li>クセを「つまずき」と「強み」の表裏で書く（否定しない）</li><li>セルフチェックや選択式のワークを1つ入れる</li><li>最後はその星座のページと、今夜の星座診断へつなぐ</li></ul></div>
+        <div class="panel ng"><h3>迷いやすい点</h3><ul><li>全記事の最後に「今日の実験」があるので、実験があるだけでは growth にしない。実験そのものが本文の中心なら growth</li><li>タイトルに「方法」「やり方」が入るなら growth、「なぜ」「性格」「クセ」なら self が目安</li><li>迷ったら、読後の一文がどれに近いかで決める</li></ul></div>
+      </div>
+    </div>
+
+    <div class="bp-sec" id="b6">
+      <h2><span class="mono">06</span>A記事テンプレート</h2>
+      <p>記事は src/stars/&lt;星座&gt;/articles/ に1ファイル1記事で置き、このテンプレートで表示します。<a href="#article/mori/tired">森の星座の記事（No.031）</a>が見本です。</p>
+      <div class="tmpl">
+        <div><span class="part"><span class="mono">TITLE</span>タイトル</span><span class="what">【〇の星座】＋悩みの場面＋得られること。</span><span class="cta">—</span></div>
+        <div><span class="part"><span class="mono">LEAD</span>肯定</span><span class="what">悩みの場面 → 「あって当然」の一文 → 吐き出しへ誘う。</span><span class="cta">—</span></div>
+        <div><span class="part"><span class="mono">STEP 1</span>吐き出す</span><span class="what">星座に合わせた問いかけ付きの吐き出し欄。</span><span class="cta">—</span></div>
+        <div><span class="part"><span class="mono">STEP 2</span>わかる</span><span class="what">同じ悩みの読者の声を3つ（Phase 2から）。</span><span class="cta">—</span></div>
+        <div><span class="part"><span class="mono">STEP 3</span>星座の声</span><span class="what">占い → 思考のクセ → キーワード。</span><span class="cta">—</span></div>
+        <div><span class="part"><span class="mono">STEP 4</span>今日の実験</span><span class="what">5分以内・道具不要・成功条件が明確な行動1つ。</span><span class="cta">—</span></div>
+        <div class="hl"><span class="part"><span class="mono">CTA ①</span>話して整理</span><span class="what">「書いても整理しきれないとき」の選択肢として案内。</span><span class="cta">→ /compare/</span></div>
+        <div><span class="part"><span class="mono">STEP 5</span>次に読む</span><span class="what">関連する星座2つへ内部リンク。</span><span class="cta">内部リンク</span></div>
+        <div class="hl"><span class="part"><span class="mono">CTA ②</span>診断</span><span class="what">今夜の星座診断。結果ページでLINE登録。</span><span class="cta">→ /shindan/</span></div>
+        <div><span class="part"><span class="mono">FAQ</span>よくある質問</span><span class="what">独自星座の説明と、悩みを肯定するQ&amp;Aを必ず1つ。</span><span class="cta">—</span></div>
+      </div>
+    </div>
+
+    <div class="bp-sec" id="b7">
+      <h2><span class="mono">07</span>言葉のルール</h2>
+      <div class="grid3">
+        <div class="panel"><h3>使う言葉</h3><ul><li>「そう感じるのは自然なこと」</li><li>「悩むのは、大切にしているから」</li><li>「答えを出さなくても大丈夫」</li><li>「できたら、それで成功」</li></ul></div>
+        <div class="panel ng"><h3>使わない言葉</h3><ul><li>「気にしすぎ」「考えすぎ」</li><li>「ポジティブに考えよう」の押し付け</li><li>「このままだと不幸になる」など不安を煽る断定</li><li>「必ず当たる」「100%的中」</li></ul></div>
+        <div class="panel"><h3>CTAの原則</h3><ul class="check"><li>ASP直リンクは /compare/ だけ</li><li>1記事のPR枠は最大2つ</li><li>吐き出し欄の直後に広告を置かない</li><li>料金・特典は公式で確認と明記</li></ul></div>
+      </div>
+    </div>
+
+    <div class="bp-sec" id="b8">
+      <h2><span class="mono">08</span>最初の30記事（3か月）</h2>
+      <div class="phase">
+        <div class="panel"><span class="mono">MONTH 1｜土台</span><h3>人間関係と受け皿</h3><ol><li>電話占いの選び方（C）</li><li>チャット占いの選び方（C）</li><li>森の星座ピラー（B）</li><li>人間関係に疲れた夜に（A・森）</li><li>断れない自分がしんどい（A・森）</li><li>親にわかってもらえない（A・根）</li><li>12の星座ピラー 残り5本（B）</li></ol></div>
+        <div class="panel"><span class="mono">MONTH 2｜広げる</span><h3>診断と星座を揃える</h3><ol><li>今夜の星座診断（診断ページ）</li><li>12の星座ピラー 残り6本（B）</li><li>A記事 ×5（花・雨・太陽・月・森）</li><li>やさしい断り方（E）</li><li>電話占い体験レビュー①（D）</li></ol></div>
+        <div class="panel"><span class="mono">MONTH 3｜つなぐ</span><h3>回遊と継続</h3><ol><li>A記事 ×5（実・風・山・星・川）</li><li>上手な休み方（E）</li><li>体験レビュー②（D）</li><li>12の星座の1月のメッセージ</li><li>吐き出しノート単体ページ公開</li></ol></div>
+      </div>
+    </div>
+
+    <div class="bp-sec" id="b9">
+      <h2><span class="mono">09</span>収益フェーズとKPI</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>フェーズ</th><th>収益源</th><th>やること</th><th>見る指標</th></tr></thead>
+        <tbody>
+          <tr><td><b>Phase 1</b><br>0〜6か月</td><td>占いASP（電話・チャット）</td><td>A記事から比較記事へ送客。体験レビューで一次情報を作る。</td><td>吐き出し欄の利用率／比較記事へのクリック率／成果件数</td></tr>
+          <tr><td><b>Phase 2</b><br>6〜12か月</td><td>12の星座ワークブック（PDF）・書籍アフィリ</td><td>星座別の吐き出し＆実験ワークを販売。LINEで配信。</td><td>診断完了数／LINE登録率／購入率</td></tr>
+          <tr><td><b>Phase 3</b><br>12か月〜</td><td>オンライン吐き出し会・月額会員</td><td>匿名で話せる少人数の会、星座別の月次プログラム。</td><td>継続率／解約率／LTV</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="bp-sec" id="b10">
+      <h2><span class="mono">10</span>安全・法務チェックリスト</h2>
+      <div class="grid2">
+        <div class="panel"><ul class="check"><li>全ページ冒頭にPR表記（2023年10月施行のステマ規制対応）</li><li>景品表示法：根拠のない「No.1」「最安」は使わない</li><li>占いは娯楽・自己理解のためと明記</li><li>運営者情報・執筆者プロフィールを公開</li></ul></div>
+        <div class="panel"><ul class="check"><li>全ての吐き出し欄の下に相談窓口への案内（厚生労働省「まもろうよ こころ」等）</li><li>相談窓口一覧ページ /soudan/ を用意し、番号は公式で確認して掲載</li><li>投稿機能を始める前に利用規約・削除基準を公開</li><li>体験レビューは実際の利用記録（日時・費用）を残す</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INFO: 運営者情報・ポリシー（#about など。中身は src/pages/） ================= -->
+<section class="view" id="v-info" hidden>
+  <div class="wrap" id="info-root"></div>
+</section>
+
+<!-- ================= 全ページ共通フッター（運営・ポリシー系はリンクのみ） ================= -->
+<footer class="site-foot"><div class="wrap">
+  <nav class="links" id="foot-links" aria-label="運営者情報・ポリシー"></nav>
+  <p>当サイトの占いは娯楽・自己理解のためのコンテンツです。医療・法律・お金の判断は専門家にご相談ください。</p>
+  <p class="copy">© FORTUNE LAB</p>
+</div></footer>
+
+</body>
+</html>
